@@ -381,30 +381,51 @@
     </footer>
 
     <script>
-        let draggableElement = document.getElementById('.batch_tool .champ_select_tool .recommended_meta .box .champion>li');
+        const draggableElement = document.querySelector('.batch_tool .champ_select_tool .recommended_meta .box .champion>li');
 
-        let offsetX, offsetY;
+        // let offsetX, offsetY;
 
-        draggableElement.addEventListener('mousedown', startDragging);
-        document.addEventListener('mouseup', stopDragging);
+        // draggableElement.addEventListener('mousedown', startDragging);
+        // document.addEventListener('mouseup', stopDragging);
+        let isMouseDown = false; // 마우스가 눌린 상태를 저장하는 변수
 
-        function startDragging(e) {
-        offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
-        offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
-        draggableElement.style.cursor = 'grabbing';
-        document.addEventListener('mousemove', whileDragging);
-        }
+        draggableElement.addEventListener('mousedown', (ec) => {
+            console.log(ec + '마우스 누름');
+            isMouseDown = true; // 마우스가 눌린 상태로 설정
+        });
 
-        function whileDragging(e) {
-        draggableElement.style.left = e.clientX - offsetX + 'px';
-        draggableElement.style.top = e.clientY - offsetY + 'px';
-        }
+        draggableElement.addEventListener('mouseup', (e) => {
+            console.log(e + '마우스 올림');
+            console.log(e);
+            isMouseDown = false; // 마우스가 떼진 상태로 설정
+        });
 
-        function stopDragging() {
-        draggableElement.style.cursor = 'grab';
-        document.removeEventListener('mousemove', whileDragging);
-        }
-        
+        draggableElement.addEventListener('mousemove', (event) => {
+            if (isMouseDown) { // 마우스가 눌린 상태인 경우에만 이벤트를 처리
+                console.log(event + '마우스 드래그');
+                console.log(event);
+            }
+        });
+
+
+
+        // function startDragging(e) {
+        //     offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
+        //     offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
+        //     draggableElement.style.cursor = 'grabbing';
+        //     document.addEventListener('mousemove', whileDragging);
+        // }
+
+        // function whileDragging(e) {
+        //     draggableElement.style.left = e.clientX - offsetX + 'px';
+        //     draggableElement.style.top = e.clientY - offsetY + 'px';
+        // }
+
+        // function stopDragging() {
+        //     draggableElement.style.cursor = 'grab';
+        //     document.removeEventListener('mousemove', whileDragging);
+        // }
+
 
     </script>
 </body>
