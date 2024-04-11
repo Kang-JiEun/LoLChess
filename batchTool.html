@@ -714,26 +714,27 @@
 
         // 드롭 가능한 영역에 들어갔을 때의 처리를 정의합니다.
         function enterDroppable(elem) {
-            elem.style.borderColor = 'gray';
-            elem.style.borderColor = 'gray';
-            elem.style.borderColor = 'gray';
+            
         }
 
         // 드롭되는 요소를 추가하는 함수를 정의합니다.
         function appendSideElement(elem, target) {
             // 드래그된 요소를 복제합니다.
             const temp = elem.cloneNode(true);
+            
             // 스타일과 클래스를 재설정합니다.
             temp.style = "";
             temp.style.transition = 'transition: all 3s linear;';
             temp.className = "active";
-            draggableElement.classList.add('active');
+            
+
             // 원래 요소를 제거하고, 복제된 요소를 추가합니다.
             elem.remove();
             let img_path=temp.firstChild.getAttribute('src');
             console.log(img_path);
-            target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ')';
+            target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ') no-repeat center/cover';
             console.log(target);
+            console.log(temp);
             target.append(temp);
         }
 
