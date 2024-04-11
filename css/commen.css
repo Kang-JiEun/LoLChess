@@ -19,11 +19,23 @@
 }
 
 /* 육각형 배치툴 */
-.hex_wrap:nth-of-type(2n){margin-left: 79px;}
-.hex{width: 45px; height: 78px; position: relative; transform: rotate(90deg); margin-right: 38px;}
-.hex::before{content: ''; display: block; width: 100%; height: 100%; background: inherit; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(60deg);}
-.hex::after{content: ''; display: block; width: 100%; height: 100%; background: inherit; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-60deg);}
-.hex, .hex::before, .hex::after{border-bottom: 4px solid black;border-top: 4px solid black;}
+.hex_wrap:nth-of-type(2n){margin-left: 80px;}
+.hex{width: 75px; margin-bottom: 25px; position: relative;margin-right: 5px;}
+.hex::after{content: ''; display: block; padding-bottom: 80%;}
+.hex-inner{position: absolute; width: 99%; padding-bottom: 114.6%; overflow: hidden; visibility: hidden; transform: rotate3d(0,0,1,-60deg) skewY(30deg);}
+.hex-inner *{position: absolute; visibility: visible;}
+.hex-cont{display: flex; width: 100%; height: 100%; overflow: hidden; transform: skewY(-30deg) rotate3d(0,0,1,60deg); background: #102c8b; justify-content: center; align-items: center;}
+
+
+.hex li.active{position: absolute; margin-right: 7px;transform: rotate(-90deg);}
+.hex li.active:last-child{margin: 0;}
+.hex li.active>img{width: 55px; height: 55px; border-radius: 8px;}
+.hex li.active>.box_item{width: 55px; position: absolute; bottom: -6px; display: flex; justify-content: center;}
+.hex li.active>.box_item>.item>img{width: 20px;}
+
+.hex li.active>p{position: absolute; top: 0; right: 0; padding: 0 3px; color: white; text-shadow: rgb(0, 0, 0) -1px 0px 2px, rgb(0, 0, 0) 0px 1px 2px, rgb(0, 0, 0) 1px 0px 2px, rgb(0, 0, 0) 0px -1px 2px; border-radius: 0 10px 0 0;}
+
+.hex-small{width: 70px;}
 
 /* search */
 .search{float: right; background: white; display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; margin-top: 20px; background: #24262c; border-radius: 5px;}
@@ -353,7 +365,11 @@
 .batch_tool .champ_synergy_tab .synergy_icon{margin-right: 8px;}
 .batch_tool .champ_synergy_tab .synergy_data{}
 .batch_tool .champ_synergy_tab .synergy_data p{font-size: 1.1rem; font-weight: 500;}
+.batch_tool .champ_batch{position: relative;}
 .batch_tool .champ_batch_tool{width: 660px; margin-bottom: 20px;}
+.batch_tool .champ_batch_tool.small{position: absolute; top: 3px; left: 3px;}
+.batch_tool .champ_batch_tool.small .hex{width: 70px; margin-right: 10px; margin-bottom: 29px;}
+.batch_tool .champ_batch_tool.small .hex .hex-cont{background: #11b288; }
 .batch_tool .champ_select_tool{width: 640px; padding: 10px;}
 
 .batch_tool .champ_select_tool .recommended_meta .wrap{flex-flow: row wrap;}
