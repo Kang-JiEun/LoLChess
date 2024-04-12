@@ -647,102 +647,106 @@
 
     <script>
 
-        // 마우스로 요소를 드래그할 때 사용할 요소를 선택합니다.
         const draggableElement = document.querySelector('.batch_tool .champ_select_tool .recommended_meta .box .champion>li');
-        // 드롭 가능한 영역을 추적하기 위한 변수를 초기화합니다.
         let currentDroppable = null;
+        let initialPosition = { x: 0, y: 0 };
 
-        // 요소를 드래그하기 위한 함수를 정의합니다.
+
+        const hexSmall = document.querySelectorAll('.batch_tool .champ_batch_tool.small .hex .hex-cont');
+
+        draggableElement.addEventListener('mousedown', () => {
+            hexSmall.forEach(element => {
+                element.style.background = 'gray';
+            });
+        });
+
+        draggableElement.addEventListener('mouseup', () => {
+            hexSmall.forEach(element => {
+                element.style.background = '#252523';
+            });
+        });
+
+
         draggableElement.addEventListener('mousedown', startDrag);
 
         function startDrag(e) {
-            // 마우스 클릭 지점과 요소의 좌상단까지의 거리를 계산합니다.
             let shiftX = e.clientX - draggableElement.getBoundingClientRect().left;
             let shiftY = e.clientY - draggableElement.getBoundingClientRect().top;
 
-            // 요소를 절대 위치로 설정하고, z-index를 설정하여 가장 위에 표시합니다.
             draggableElement.style.position = 'absolute';
             draggableElement.style.zIndex = 1000;
 
-            // 마우스 이동에 따라 요소를 이동시키는 함수를 호출합니다.
+            initialPosition.x = draggableElement.offsetLeft;
+            initialPosition.y = draggableElement.offsetTop;
+
             moveAt(e.pageX, e.pageY);
 
             function moveAt(pageX, pageY) {
-                // 요소의 위치를 갱신합니다.
                 draggableElement.style.left = pageX - shiftX + 'px';
                 draggableElement.style.top = pageY - shiftY + 'px';
             }
 
             function onMouseMove(event) {
-                // 마우스 이동에 따라 요소를 이동시킵니다.
                 moveAt(event.pageX, event.pageY);
 
-                // 요소를 숨긴 후 마우스 아래의 요소를 가져옵니다.
                 draggableElement.hidden = true;
                 let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
                 draggableElement.hidden = false;
 
                 if (!elemBelow) return;
 
-                // 마우스 아래에 있는 요소 중 가장 가까운 .hex 클래스를 가진 부모 요소를 찾습니다.
                 let droppableBelow = elemBelow.closest('.hex');
-                // 이전에 드롭 가능한 요소와 현재 드롭 가능한 요소를 비교하여 변경되었는지 확인합니다.
+                console.log(droppableBelow);
+                
                 if (currentDroppable != droppableBelow) {
-                    // 이전에 드롭 가능한 요소가 있으면 테두리 색을 제거합니다.
-                    if (currentDroppable) {
-                        leaveDroppable(currentDroppable);
-                    }
-                    // 현재 드롭 가능한 요소를 갱신하고, 해당 요소에 테두리 색을 추가합니다.
                     currentDroppable = droppableBelow;
-                    if (currentDroppable) {
-                        enterDroppable(currentDroppable);
-                        // 드래그된 요소를 드롭 가능한 요소에 추가합니다.
-                        appendSideElement(draggableElement, droppableBelow);
-                    }
+
+                }else if(currentDroppable){
+                    console.log('파랑');
+                    currentDroppable.firstElementChild.firstElementChild.style.background = 'blue';
                 }
+
+
+                console.log(currentDroppable);
             }
 
-            // 마우스 이동 이벤트를 추가하여 요소를 이동시킵니다.
             document.addEventListener('mousemove', onMouseMove);
 
-            // 마우스 버튼을 놓았을 때, 마우스 이동 이벤트를 제거합니다.
             document.onmouseup = function () {
+                draggableElement.style.left = initialPosition.x + 'px';
+                draggableElement.style.top = initialPosition.y + 'px';
+
+                initialPosition.x = draggableElement.offsetLeft;
+                initialPosition.y = draggableElement.offsetTop;
+
+                if (currentDroppable) {
+                    appendSideElement(draggableElement, currentDroppable);
+                    backDroppable(currentDroppable);
+                }
+
+
                 document.removeEventListener('mousemove', onMouseMove);
                 document.onmouseup = null;
             };
         }
 
-        // 드롭 가능한 영역에 들어갔을 때의 처리를 정의합니다.
-        function enterDroppable(elem) {
-            
+        function backDroppable(elem) {
+            elem.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.style.background = 'red';
         }
 
-        // 드롭되는 요소를 추가하는 함수를 정의합니다.
-        function appendSideElement(elem, target) {
-            // 드래그된 요소를 복제합니다.
-            const temp = elem.cloneNode(true);
-            
-            // 스타일과 클래스를 재설정합니다.
-            temp.style = "";
-            temp.style.transition = 'transition: all 3s linear;';
-            temp.className = "active";
-            
 
-            // 원래 요소를 제거하고, 복제된 요소를 추가합니다.
+
+        function appendSideElement(elem, target) {
+            const temp = elem.cloneNode(true);
+
             elem.remove();
-            let img_path=temp.firstChild.getAttribute('src');
-            console.log(img_path);
+            let img_path = temp.firstChild.getAttribute('src');
             target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ') no-repeat center/cover';
-            console.log(target);
-            console.log(temp);
             target.append(temp);
         }
-
-        // 드래그 가능한 요소를 브라우저 기본 드래그 앤 드롭 기능을 비활성화합니다.
         document.ondragstart = function () {
             return false;
         };
-
 
 
     </script>

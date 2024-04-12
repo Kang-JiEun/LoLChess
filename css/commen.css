@@ -20,11 +20,11 @@
 
 /* 육각형 배치툴 */
 .hex_wrap:nth-of-type(2n){margin-left: 80px;}
-.hex{width: 75px; margin-bottom: 25px; position: relative;margin-right: 5px;}
+.hex{width: 77px; margin-bottom: 25px; position: relative;margin-right: 5px;}
 .hex::after{content: ''; display: block; padding-bottom: 80%;}
-.hex-inner{position: absolute; width: 99%; padding-bottom: 114.6%; overflow: hidden; visibility: hidden; transform: rotate3d(0,0,1,-60deg) skewY(30deg);}
+.hex-inner{position: absolute; width: 100%; padding-bottom: 114.6%; overflow: hidden; visibility: hidden; transform: rotate3d(0,0,1,-60deg) skewY(30deg);}
 .hex-inner *{position: absolute; visibility: visible;}
-.hex-cont{display: flex; width: 100%; height: 100%; overflow: hidden; transform: skewY(-30deg) rotate3d(0,0,1,60deg); background: #102c8b; justify-content: center; align-items: center;}
+.hex-cont{display: flex; width: 100%; height: 100%; overflow: hidden; transform: skewY(-30deg) rotate3d(0,0,1,60deg); background: black; justify-content: center; align-items: center;}
 
 .hex li.active{display: none;}
 
@@ -360,15 +360,15 @@
 .batch_tool .champ_synergy_tab .synergy_data p{font-size: 1.1rem; font-weight: 500;}
 .batch_tool .champ_batch{position: relative;}
 .batch_tool .champ_batch_tool{width: 660px; margin-bottom: 20px;}
-.batch_tool .champ_batch_tool.small{position: absolute; top: 3px; left: 3px;}
-.batch_tool .champ_batch_tool.small .hex{width: 70px; margin-right: 10px; margin-bottom: 29px;}
-.batch_tool .champ_batch_tool.small .hex .hex-cont{background: #11b288;}
+.batch_tool .champ_batch_tool.small{position: absolute; top: 50%; left: 35%; transform: translate(-50.5%, -52%);}
+.batch_tool .champ_batch_tool.small .hex{width: 72px; margin-right: 10px; margin-bottom: 29px;transform: scale(0.95);}
+.batch_tool .champ_batch_tool.small .hex .hex-cont{background: #252523;}
 .batch_tool .champ_select_tool{width: 640px; padding: 10px;}
 
 .batch_tool .champ_select_tool .recommended_meta .wrap{flex-flow: row wrap;}
 .batch_tool .champ_select_tool .recommended_meta .box{padding: 0;}
 .batch_tool .champ_select_tool .recommended_meta .box .champion{height: auto; margin: 0;}
-.batch_tool .champ_select_tool .recommended_meta .box .champion>li{margin-right: 9.5px; margin-bottom: 5px;}
+.batch_tool .champ_select_tool .recommended_meta .box .champion>li{margin-right: 9.5px; margin-bottom: 5px; position: relative;}
 .batch_tool .champ_select_tool .recommended_meta .box .champion>li>img{width: 60px; height: 60px;}
 .batch_tool .champ_select_tool .recommended_meta .box .champion>li:nth-of-type(9n+9){margin-right: 0;}
 
