@@ -132,12 +132,14 @@
 .recommended_meta .box .champion>.pink>img{border: 2px solid #c440da;}
 .recommended_meta .box .champion>.yellow>img{border: 2px solid #ffb93b;}
 
-.recommended_meta .box .champion>li>p{position: absolute; top: 0; right: 0; padding: 0 3px; color: white; text-shadow: rgb(0, 0, 0) -1px 0px 2px, rgb(0, 0, 0) 0px 1px 2px, rgb(0, 0, 0) 1px 0px 2px, rgb(0, 0, 0) 0px -1px 2px; border-radius: 0 10px 0 0;}
-.recommended_meta .box .champion .grey>p{background: gray;}
-.recommended_meta .box .champion .green>p{background: #11b288;}
-.recommended_meta .box .champion .blue>p{background: #207ac7;}
-.recommended_meta .box .champion .pink>p{background: #c440da;}
-.recommended_meta .box .champion .yellow>p{background: #ffb93b;}
+
+.recommended_meta .box .champion>li>p.name{position: absolute;width: 100%; bottom: 8px;left: 50%;transform: translateX(-50%);text-align: center; color: rgb(255, 255, 255);text-shadow: rgb(0, 0, 0) -1px 0px 2px, rgb(0, 0, 0) 0px 1px 2px, rgb(0, 0, 0) 1px 0px 2px, rgb(0, 0, 0) 0px -1px 2px;font-size: 12px;}
+.recommended_meta .box .champion>li>p.coin{position: absolute; top: 0; right: 0; padding: 0 3px; color: white; text-shadow: rgb(0, 0, 0) -1px 0px 2px, rgb(0, 0, 0) 0px 1px 2px, rgb(0, 0, 0) 1px 0px 2px, rgb(0, 0, 0) 0px -1px 2px; border-radius: 0 10px 0 0;}
+.recommended_meta .box .champion .grey>p.coin{background: gray;}
+.recommended_meta .box .champion .green>p.coin{background: #11b288;}
+.recommended_meta .box .champion .blue>p.coin{background: #207ac7;}
+.recommended_meta .box .champion .pink>p.coin{background: #c440da;}
+.recommended_meta .box .champion .yellow>p.coin{background: #ffb93b;}
 
 @media screen and (max-width: 1200px){
     .recommended_meta .box .champion{margin-bottom: 30px;}
@@ -360,7 +362,7 @@
 .batch_tool .champ_synergy_tab .synergy_data p{font-size: 1.1rem; font-weight: 500;}
 .batch_tool .champ_batch{position: relative;}
 .batch_tool .champ_batch_tool{width: 660px; margin-bottom: 20px;}
-.batch_tool .champ_batch_tool.small{position: absolute; top: 50%; left: 35%; transform: translate(-50.5%, -52%);}
+.batch_tool .champ_batch_tool.small{position: absolute; top: 50%; left: 35%; transform: translate(-50.54%, -51.9%);}
 .batch_tool .champ_batch_tool.small .hex{width: 72px; margin-right: 10px; margin-bottom: 29px;transform: scale(0.95);}
 .batch_tool .champ_batch_tool.small .hex .hex-cont{background: #252523;}
 .batch_tool .champ_select_tool{width: 640px; padding: 10px;}
