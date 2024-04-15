@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <link href="./css/base.css" rel="stylesheet">
     <link href="./css/commen.css" rel="stylesheet">
+    <script src="./script/champData.js"></script>
 
     <title>LOLChessgg</title>
 
@@ -65,18 +66,27 @@
     <section class="batch_tool">
         <div class="inner">
             <div class="batch_tool_wrap wrap_c">
-                <div class="champ_synergy">
-                    <div class="champ_synergy_tab wrap_s">
-                        <div class="synergy_icon center">
-                            <div class="black">
-                                <img src="./img/synergy/Syndicate%20(1).svg" alt="Syndicate">
-                            </div>
+                <div class="champ_info_tab">
+                    <div class="champ_Detail_tab">
+                        <div class="box center combination_table">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>챔피언을 배치하면<br>시너지가 활성화됩니다</p>
                         </div>
-                        <div class="synergy_data">
-                            <p>범죄조직</p>
+                    </div>
+                    <div class="champ_synergy">
+                        <div class="champ_synergy_tab wrap_s">
+                            <div class="synergy_icon center">
+                                <div class="black">
+                                    <img src="./img/synergy/Syndicate_white.svg" alt="Syndicate">
+                                </div>
+                            </div>
+                            <div class="synergy_data">
+                                <p>범죄조직</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
                 <div>
                     <div class="champ_batch wrap_c">
@@ -674,122 +684,136 @@
 
     <script>
 
-        const draggableElement = document.querySelector('.batch_tool .champ_select_tool .recommended_meta .box .champion>li');
+        const draggableElement = document.querySelectorAll('.batch_tool .champ_select_tool .recommended_meta .box .champion>li');
+        const synergyElement = document.querySelector('.batch_tool .champ_synergy_tab');
         const champName = document.querySelector('.recommended_meta .box .champion>li>p.name');
+        const hexSmall = document.querySelectorAll('.batch_tool .champ_batch_tool.small .hex .hex-cont');
+        const detailTable = document.querySelectorAll('.batch_tool .champ_info_tab .champ_Detail_tab');
 
         let currentDroppable = null;
         let initialPosition = { x: 0, y: 0 };
 
+        synergyElement.style.display = 'none';
 
-        const hexSmall = document.querySelectorAll('.batch_tool .champ_batch_tool.small .hex .hex-cont');
+        draggableElement.forEach(dragele => {
+            dragele.addEventListener('mousedown', () => {
+                hexSmall.forEach(dragele => {
+                    dragele.style.background = 'gray';
+                });
 
-        draggableElement.addEventListener('mousedown', () => {
-            hexSmall.forEach(element => {
-                element.style.background = 'gray';
-            });
-        });
-
-        draggableElement.addEventListener('mouseup', () => {
-            hexSmall.forEach(element => {
-                element.style.background = '';
             });
 
-            
-            champInformation.forEach(i =>{
-                if(champName.innerText == champInformation[i].name){
-                    console.log('같다');
-                    console.log(champInformation[i]);
+            dragele.addEventListener('mouseup', () => {
+                hexSmall.forEach(dragele => {
+                    dragele.style.background = '';
+                });
+
+            });
+
+
+
+
+            dragele.addEventListener('mousedown', startDrag);
+
+            function startDrag(e) {
+                let shiftX = e.clientX - dragele.getBoundingClientRect().left;
+                let shiftY = e.clientY - dragele.getBoundingClientRect().top;
+
+                dragele.style.position = 'absolute';
+                dragele.style.zIndex = 1000;
+
+                initialPosition.x = dragele.offsetLeft;
+                initialPosition.y = dragele.offsetTop;
+
+                moveAt(e.pageX, e.pageY);
+
+                function moveAt(pageX, pageY) {
+                    dragele.style.left = pageX - shiftX + 'px';
+                    dragele.style.top = pageY - shiftY + 'px';
                 }
-            })
+
+                function onMouseMove(event) {
+                    moveAt(event.pageX, event.pageY);
+
+                    dragele.hidden = true;
+                    let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+                    dragele.hidden = false;
+
+                    if (!elemBelow) return;
+
+                    let droppableBelow = elemBelow.closest('.hex');
+                    console.log(droppableBelow);
+
+                    if (currentDroppable != droppableBelow) {
+                        currentDroppable = droppableBelow;
+
+                    } else if (currentDroppable) {
+                        console.log('파랑');
+                        currentDroppable.firstElementChild.firstElementChild.style.background = 'blue';
+                    }
+
+
+                    console.log(currentDroppable);
+                }
+
+                document.addEventListener('mousemove', onMouseMove);
+
+                document.onmouseup = function () {
+                    dragele.style.left = initialPosition.x + 'px';
+                    dragele.style.top = initialPosition.y + 'px';
+
+                    initialPosition.x = dragele.offsetLeft;
+                    initialPosition.y = dragele.offsetTop;
+
+                    if (currentDroppable) {
+                        appendSideElement(dragele, currentDroppable);
+                        synergySideElement(synergyElement);
+                        detailTable.forEach(item => {
+                            item.remove();
+                        });
+                    }
+
+
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.onmouseup = null;
+                };
+
+
+            }
+
+
+
+            function synergySideElement(elem) {
+
+                for (let champ of champInformation) {
+                    if (champName.innerHTML === champ.name) {
+                        synergyElement.style.display = '';
+
+                        const temp = elem.cloneNode(true);
+                        console.log(temp);
+
+                        temp.firstElementChild.firstElementChild.firstElementChild.setAttribute('src', champ.synergyIcon);
+                        temp.lastElementChild.firstElementChild.innerHTML = champ.synergy;
+                        elem.parentElement.append(temp);
+                        elem.remove();
+                    }
+                }
+            }
+
+
+            function appendSideElement(elem, target) {
+                const temp = elem.cloneNode(true);
+                let img_path = temp.firstChild.getAttribute('src');
+                target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ') no-repeat center/cover';
+                target.append(temp);
+
+                temp.remove();
+            }
+
+
+
+
         });
-
-
-        draggableElement.addEventListener('mousedown', startDrag);
-
-        function startDrag(e) {
-            let shiftX = e.clientX - draggableElement.getBoundingClientRect().left;
-            let shiftY = e.clientY - draggableElement.getBoundingClientRect().top;
-
-            draggableElement.style.position = 'absolute';
-            draggableElement.style.zIndex = 1000;
-
-            initialPosition.x = draggableElement.offsetLeft;
-            initialPosition.y = draggableElement.offsetTop;
-
-            moveAt(e.pageX, e.pageY);
-
-            function moveAt(pageX, pageY) {
-                draggableElement.style.left = pageX - shiftX + 'px';
-                draggableElement.style.top = pageY - shiftY + 'px';
-            }
-
-            function onMouseMove(event) {
-                moveAt(event.pageX, event.pageY);
-
-                draggableElement.hidden = true;
-                let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-                draggableElement.hidden = false;
-
-                if (!elemBelow) return;
-
-                let droppableBelow = elemBelow.closest('.hex');
-                console.log(droppableBelow);
-
-                if (currentDroppable != droppableBelow) {
-                    currentDroppable = droppableBelow;
-
-                } else if (currentDroppable) {
-                    console.log('파랑');
-                    currentDroppable.firstElementChild.firstElementChild.style.background = 'blue';
-                }
-
-
-                console.log(currentDroppable);
-            }
-
-            document.addEventListener('mousemove', onMouseMove);
-
-            document.onmouseup = function () {
-                draggableElement.style.left = initialPosition.x + 'px';
-                draggableElement.style.top = initialPosition.y + 'px';
-
-                initialPosition.x = draggableElement.offsetLeft;
-                initialPosition.y = draggableElement.offsetTop;
-
-                if (currentDroppable) {
-                    appendSideElement(draggableElement, currentDroppable);
-                    backDroppable(currentDroppable);
-                }
-
-
-                document.removeEventListener('mousemove', onMouseMove);
-                document.onmouseup = null;
-            };
-
-
-            function backDroppable(elem) {
-                elem.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.style.background = 'red';
-            }
-        }
-
-        
-
-        function appendSideElement(elem, target) {
-            const temp = elem.cloneNode(true);
-
-            elem.remove();
-
-
-            
-            
-
-
-            let img_path = temp.firstChild.getAttribute('src');
-            target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ') no-repeat center/cover';
-            target.append(temp);
-        }
-
-
 
         document.ondragstart = function () {
             return false;
@@ -798,7 +822,7 @@
 
     </script>
 
-    <script src="./script/champData.js"></script>
+
 </body>
 
 </html>
