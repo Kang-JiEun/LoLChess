@@ -358,7 +358,7 @@
 .batch_tool .batch_tool_wrap{padding: 30px 0;}
 .batch_tool .champ_info_tab{width: 200px;}
 .batch_tool .champ_info_tab .champ_Detail_tab{width: 100%; padding: 0;}
-.batch_tool .champ_synergy_tab{width: 200px;padding: 5px;background: rgb(39, 40, 46); border: 1px solid rgb(73 73 73); border-radius: 5px;}
+.batch_tool .champ_synergy_tab{width: 200px;padding: 5px;background: rgb(39, 40, 46); border: 1px solid rgb(73 73 73); border-radius: 5px; margin-bottom: 5px;}
 .batch_tool .champ_synergy_tab .synergy_icon{margin-right: 8px;}
 .batch_tool .champ_synergy_tab .synergy_data{}
 .batch_tool .champ_synergy_tab .synergy_data p{font-size: 1.1rem; font-weight: 500;}

@@ -77,11 +77,11 @@
                         <div class="champ_synergy_tab wrap_s">
                             <div class="synergy_icon center">
                                 <div class="black">
-                                    <img src="./img/synergy/Syndicate_white.svg" alt="Syndicate">
+                                    <img src="" alt="">
                                 </div>
                             </div>
                             <div class="synergy_data">
-                                <p>범죄조직</p>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -686,39 +686,24 @@
 
         const draggableElement = document.querySelectorAll('.batch_tool .champ_select_tool .recommended_meta .box .champion>li');
         const synergyElement = document.querySelector('.batch_tool .champ_synergy_tab');
-        const champName = document.querySelector('.recommended_meta .box .champion>li>p.name');
         const hexSmall = document.querySelectorAll('.batch_tool .champ_batch_tool.small .hex .hex-cont');
         const detailTable = document.querySelector('.batch_tool .champ_info_tab .champ_Detail_tab');
 
-        
+
 
         draggableElement.forEach(dragele => {
-
+            const champName = dragele.querySelector('.recommended_meta .box .champion>li>p.name');
+            
             let currentDroppable = null;
             let initialPosition = { x: 0, y: 0 };
 
             synergyElement.style.display = 'none';
 
-            dragele.addEventListener('mousedown', () => {
-                hexSmall.forEach(element => {
-                    element.style.background = 'gray';
-                });
-
-            });
-
-            dragele.addEventListener('mouseup', () => {
-                hexSmall.forEach(element => {
-                    element.style.background = '';
-                });
-
-            });
-
-
-
-
             dragele.addEventListener('mousedown', startDrag);
 
             function startDrag(e) {
+                haxColor(hexSmall, 'gray');
+                
                 let shiftX = e.clientX - dragele.getBoundingClientRect().left;
                 let shiftY = e.clientY - dragele.getBoundingClientRect().top;
 
@@ -735,6 +720,8 @@
                     dragele.style.top = pageY - shiftY + 'px';
                 }
 
+                document.addEventListener('mousemove', onMouseMove);
+
                 function onMouseMove(event) {
                     moveAt(event.pageX, event.pageY);
 
@@ -747,23 +734,21 @@
 
                     //현재 마우스 위치에서 가장 가까운 .hex 클래스를 가진 상위 요소를 찾아서 droppableBelow 변수에 할당합니다.
                     let droppableBelow = elemBelow.closest('.hex');
-                    console.log(droppableBelow);
 
                     if (currentDroppable != droppableBelow) {
                         currentDroppable = droppableBelow;
+                        
 
                     } else if (currentDroppable) {
-                        console.log('파랑');
-                        currentDroppable.firstElementChild.firstElementChild.style.background = 'blue';
+                        haxColor(hexSmall, 'gray');
+                        currentDroppable.firstElementChild.firstElementChild.style.backgroundColor = 'blue';
                     }
-
-
-                    console.log(currentDroppable);
                 }
 
-                document.addEventListener('mousemove', onMouseMove);
+
 
                 document.onmouseup = function () {
+                    haxColor(hexSmall, '');
                     dragele.style.left = initialPosition.x + 'px';
                     dragele.style.top = initialPosition.y + 'px';
 
@@ -771,8 +756,8 @@
                     initialPosition.y = dragele.offsetTop;
 
                     if (currentDroppable) {
+                        synergySideElement(synergyElement, champName);
                         appendSideElement(dragele, currentDroppable);
-                        synergySideElement(synergyElement);
                         detailTable.remove();
                     }
 
@@ -785,35 +770,34 @@
             }
 
 
+            function haxColor(elem, color){
+                elem.forEach(item => {
+                    item.style.backgroundColor = color;
+                });
+            }
 
-            function synergySideElement(elem) {
 
+            function synergySideElement(elem, champName) {
                 for (let champ of champInformation) {
                     if (champName.innerHTML === champ.name) {
-                        synergyElement.style.display = '';
-
-                        const temp = elem.cloneNode(true);
-                        console.log(temp);
-
+                        let temp = elem.cloneNode(true);
+                        temp.style.display = '';
                         temp.firstElementChild.firstElementChild.firstElementChild.setAttribute('src', champ.synergyIcon);
                         temp.lastElementChild.firstElementChild.innerHTML = champ.synergy;
                         elem.parentElement.append(temp);
-                        elem.remove();
                     }
                 }
+                
             }
 
 
             function appendSideElement(elem, target) {
-                const temp = elem.cloneNode(true);
+                let temp = elem.cloneNode(true);
                 let img_path = temp.firstChild.getAttribute('src');
                 target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ') no-repeat center/cover';
                 target.append(temp);
-
                 temp.remove();
             }
-
-
 
 
         });
@@ -821,6 +805,8 @@
         document.ondragstart = function () {
             return false;
         };
+
+        
 
 
     </script>
