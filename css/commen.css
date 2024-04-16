@@ -158,7 +158,7 @@
     .recommended_meta .box .btn{position: absolute; bottom: 10%; right: 3%;}
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 460px){
     .recommended_meta .box{display: block;}
     .recommended_meta .box .icon{width: auto;}
     .recommended_meta .box .lnb{justify-content: initial; flex-wrap: wrap;}

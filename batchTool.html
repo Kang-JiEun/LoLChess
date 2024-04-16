@@ -456,92 +456,92 @@
                                         <li class="cham_item pink">
                                             <img src="./img/champion/Janna_1634785078.png" alt="img7">
                                             <p class="coin">$4</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">잔나</p>
                                         </li>
                                         <li class="cham_item yellow">
                                             <img src="./img/champion/Jayce_1635133912.png" alt="img8">
                                             <p class="coin">$5</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">제이스</p>
                                         </li>
                                         <li class="cham_item grey">
                                             <img src="./img/champion/Darius_1634784329.png" alt="img1">
                                             <p class="coin">$1</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">다리우스</p>
                                         </li>
                                         <li class="cham_item green">
                                             <img src="./img/champion/Zyra_1634785008.png" alt="img2">
                                             <p class="coin">$2</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">자이라</p>
                                         </li>
                                         <li class="cham_item green">
                                             <img src="./img/champion/Talon.png" alt="img3">
                                             <p class="coin">$2</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">탈론</p>
                                         </li>
                                         <li class="cham_item blue">
                                             <img src="./img/champion/Shaco_1634784787.png" alt="img4">
                                             <p class="coin">$3</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">샤코</p>
                                         </li>
                                         <li class="cham_item blue">
                                             <img src="./img/champion/Ekko.png" alt="img5">
                                             <p class="coin">$3</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">에코</p>
                                         </li>
                                         <li class="cham_item pink">
                                             <img src="./img/champion/Braum_1634784638.png" alt="img6">
                                             <p class="coin">$4</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">브라움</p>
                                         </li>
                                         <li class="cham_item pink">
                                             <img src="./img/champion/Janna_1634785078.png" alt="img7">
                                             <p class="coin">$4</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">잔나</p>
                                         </li>
                                         <li class="cham_item yellow">
                                             <img src="./img/champion/Akali_1634784820.png" alt="img8">
                                             <p class="coin">$5</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">아칼리</p>
                                         </li>
                                         <li class="cham_item grey">
                                             <img src="./img/champion/Ziggs.png" alt="img1">
                                             <p class="coin">$1</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">직스</p>
                                         </li>
                                         <li class="cham_item green">
                                             <img src="./img/champion/Swain.png" alt="img2">
                                             <p class="coin">$2</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">스웨인</p>
                                         </li>
                                         <li class="cham_item blue">
                                             <img src="./img/champion/Malzahar.png" alt="img3">
                                             <p class="coin">$3</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">말자하</p>
                                         </li>
                                         <li class="cham_item blue">
                                             <img src="./img/champion/Vex.png" alt="img4">
                                             <p class="coin">$3</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">벡스</p>
                                         </li>
                                         <li class="cham_item pink">
                                             <img src="./img/champion/Lux_1634784357.png" alt="img5">
                                             <p class="coin">$4</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">럭스</p>
                                         </li>
                                         <li class="cham_item pink">
                                             <img src="./img/champion/Janna_1634785078.png" alt="img6">
                                             <p class="coin">$4</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">잔나</p>
                                         </li>
                                         <li class="cham_item yellow">
                                             <img src="./img/champion/Viktor.png" alt="img7">
                                             <p class="coin">$5</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">빅토르</p>
                                         </li>
                                         <li class="cham_item yellow">
                                             <img src="./img/champion/Yuumi_1634784979.png" alt="img8">
                                             <p class="coin">$5</p>
-                                            <p class="name">이즈리얼</p>
+                                            <p class="name">유미</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -690,22 +690,25 @@
         const hexSmall = document.querySelectorAll('.batch_tool .champ_batch_tool.small .hex .hex-cont');
         const detailTable = document.querySelectorAll('.batch_tool .champ_info_tab .champ_Detail_tab');
 
-        let currentDroppable = null;
-        let initialPosition = { x: 0, y: 0 };
-
-        synergyElement.style.display = 'none';
+        
 
         draggableElement.forEach(dragele => {
+
+            let currentDroppable = null;
+            let initialPosition = { x: 0, y: 0 };
+
+            synergyElement.style.display = 'none';
+
             dragele.addEventListener('mousedown', () => {
-                hexSmall.forEach(dragele => {
-                    dragele.style.background = 'gray';
+                hexSmall.forEach(element => {
+                    element.style.background = 'gray';
                 });
 
             });
 
             dragele.addEventListener('mouseup', () => {
-                hexSmall.forEach(dragele => {
-                    dragele.style.background = '';
+                hexSmall.forEach(element => {
+                    element.style.background = '';
                 });
 
             });
