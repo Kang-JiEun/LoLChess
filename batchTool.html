@@ -54,7 +54,7 @@
         </div>
     </header>
 
-    <section class="tab_menu">
+    <section class="tab_menu content">
         <div class="inner">
             <ul class="gnb wrap">
                 <li class="lnb"><a href="/lolchess/meta.html">추천 메타</a></li>
@@ -406,7 +406,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wrap_c">
+                    <div class="select_tool wrap_c content">
                         <div class="box champ_select_tool">
                             <div class="tab_menu_tool wrap">
                                 <div class="tab_menu_ver">
@@ -675,9 +675,9 @@
                 reflect the views or opinions of Riot Games or anyone officially involved in producing or managing
                 League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot
                 Games, Inc. League of Legends © Riot Games, Inc.</p>
-            <ul>
+            <ul class="wrap_s">
                 <li><a href="#">개인정보 처리방침</a></li>
-                <li><a href="#">이용약관</a></li>
+                <li class="ml10"><a href="#">이용약관</a></li>
             </ul>
         </div>
     </footer>
@@ -688,22 +688,32 @@
         const synergyElement = document.querySelector('.batch_tool .champ_synergy_tab');
         const hexSmall = document.querySelectorAll('.batch_tool .champ_batch_tool.small .hex .hex-cont');
         const detailTable = document.querySelector('.batch_tool .champ_info_tab .champ_Detail_tab');
+        const btnReset = document.querySelector('.btn_reset');
+        
 
 
-
+        
         draggableElement.forEach(dragele => {
-            const champName = dragele.querySelector('.recommended_meta .box .champion>li>p.name');
-            
+            let champName = dragele.querySelector('.recommended_meta .box .champion>li>p.name');
+            // console.log(champName);
+            // for (let champ of champInformation) {
+            //     champName.innerHTML = champ.name;
+
+            //     console.log(champ.name);
+            //     console.log(champName.innerHTML);
+            // }
+
             let currentDroppable = null;
             let initialPosition = { x: 0, y: 0 };
 
             synergyElement.style.display = 'none';
 
+            dragele.addEventListener('touchstart', startDrag);
             dragele.addEventListener('mousedown', startDrag);
 
             function startDrag(e) {
                 haxColor(hexSmall, 'gray');
-                
+
                 let shiftX = e.clientX - dragele.getBoundingClientRect().left;
                 let shiftY = e.clientY - dragele.getBoundingClientRect().top;
 
@@ -737,7 +747,7 @@
 
                     if (currentDroppable != droppableBelow) {
                         currentDroppable = droppableBelow;
-                        
+
 
                     } else if (currentDroppable) {
                         haxColor(hexSmall, 'gray');
@@ -756,6 +766,14 @@
                     initialPosition.y = dragele.offsetTop;
 
                     if (currentDroppable) {
+                        btnReset.classList.add('on');
+
+                        const btnResetOn = document.querySelector('.btn_reset.on');
+
+                        btnResetOn.addEventListener('click', () => {
+                            location.reload();
+                        });
+
                         synergySideElement(synergyElement, champName);
                         appendSideElement(dragele, currentDroppable);
                         detailTable.remove();
@@ -770,7 +788,7 @@
             }
 
 
-            function haxColor(elem, color){
+            function haxColor(elem, color) {
                 elem.forEach(item => {
                     item.style.backgroundColor = color;
                 });
@@ -787,13 +805,13 @@
                         elem.parentElement.append(temp);
                     }
                 }
-                
+
             }
 
 
             function appendSideElement(elem, target) {
                 let temp = elem.cloneNode(true);
-                let img_path = temp.firstChild.getAttribute('src');
+                let img_path = temp.firstElementChild.getAttribute('src');
                 target.firstElementChild.firstElementChild.style.background = 'url(' + img_path + ') no-repeat center/cover';
                 target.append(temp);
                 temp.remove();
@@ -805,9 +823,6 @@
         document.ondragstart = function () {
             return false;
         };
-
-        
-
 
     </script>
 
